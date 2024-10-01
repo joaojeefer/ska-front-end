@@ -21,7 +21,7 @@ export const LoginForm = () => {
         const response = await api.post('/auth/login', data, { headers: { 'Content-Type': 'application/json' } });
 
         if (response.status === 200) {
-            router.push('/dashboard');
+            router.push('/machines');
         }
     }
 
