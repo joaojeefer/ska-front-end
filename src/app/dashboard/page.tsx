@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { Header } from '@/components';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Layout from '../../components/layout'
 import VerticalBarChart from '../../components/charts/verticalbarchart'
@@ -35,9 +35,36 @@ import LineChart from '../../components/charts/linechart';
 //     pecas_produzidas: '5', pecas_defeito: '5', maquina_id: '5'
 //   },
 // ]
+const oeeData = {
+  percent: 0.49,
+  disponibilidade: 96,
+  produtividade: 56,
+  qualidade: 92
+};
 
+const datasetVertical = {
+  label: "Quantidade",
+  data: [24200, 2650, 2630], // Valores como na imagem que o João mandou
+  backgroundColor: ["#00bfff", "#ff4500", "#ff6347"],
+};
+
+const datasetHorizontal = {
+  label: "Quantidade",
+  data: [24200, 2650, 2630], // Valores como na imagem que o João mandou
+  backgroundColor: ["#00bfff", "#ff4500", "#ff6347"],
+};
+
+const datasetLine = {
+  position: 'bottom',
+  label: "OEE Anual",
+  data: [76, 78, 70, 68, 60, 88, 89], // Valores conforme gráfico da imagem
+  borderColor: "#00bfff",
+  backgroundColor: "rgba(0, 191, 255, 0.5)",
+  fill: true,
+};
 
 const Dashboard: React.FC = () => {
+
   return (
     <main>
 
@@ -60,26 +87,26 @@ const Dashboard: React.FC = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
           <div className="bg-white shadow-lg rounded-lg ">
-            <OEEGauge />
+            <OEEGauge data={oeeData} />
           </div>
 
           <div className="grid grid-cols-1  gap-6 mt-6">
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <VerticalBarChart />
+              <VerticalBarChart dataset={datasetVertical} />
             </div>
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <HorizontalBarChart />
+              <HorizontalBarChart dataset={datasetHorizontal} />
             </div>
 
           </div>
           <div className="grid grid-cols-1 gap-6 mt-6">
             <div className="bg-white shadow-lg rounded-lg p-6">
               <h2 className="text-xl font-semibold">OEE Anual</h2>
-              <LineChart />
+              <LineChart dataset={datasetLine} />
             </div>
             <div className="bg-white shadow-lg rounded-lg p-6">
               <h2 className="text-xl font-semibold">Feedback</h2>
-              <LineChart />
+              <LineChart dataset={datasetLine} />
             </div>
           </div>
         </div>

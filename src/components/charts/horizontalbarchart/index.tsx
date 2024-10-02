@@ -4,15 +4,11 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const HorizontalBarChart = () => {
+const HorizontalBarChart = ({ dataset }) => {
     const data = {
         labels: ["Peças Produzidas", "Horas Paradas", "Refugos"],
         datasets: [
-            {
-                label: "Quantidade",
-                data: [24200, 2650, 2630], // Valores como na imagem que o João mandou
-                backgroundColor: ["#00bfff", "#ff4500", "#ff6347"],
-            },
+            dataset
         ],
     };
 
