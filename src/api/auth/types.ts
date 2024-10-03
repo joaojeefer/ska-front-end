@@ -7,4 +7,5 @@ export type SingIn = {
     token: string;
     userId: number;
     username: string;
+    name: string;
 }
