@@ -1,5 +1,5 @@
 export type Machine = {
-    machineId: number;
+    id: number;
     description: string;
     localization: string;
 }
