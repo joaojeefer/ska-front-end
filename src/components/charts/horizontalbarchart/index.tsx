@@ -4,9 +4,10 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const HorizontalBarChart = ({ dataset }) => {
+const HorizontalBarChart = ({ dataset, title }) => {
     const data = {
-        labels: ["Peças Produzidas", "Horas Paradas", "Refugos"],
+        //labels: ["Peças Produzidas", "Horas Paradas", "Refugos"],
+        labels: dataset.label,
         datasets: [
             dataset
         ],
@@ -16,12 +17,21 @@ const HorizontalBarChart = ({ dataset }) => {
         indexAxis: 'y', // Faz com que o gráfico seja horizontal
         responsive: true,
         plugins: {
-            legend: { position: "top" },
-            title: { display: true, text: "Indicadores de Produção" },
+            legend: { position: "top", display: false },
+            title: {
+                display: true,
+                text: title,
+                font: {
+                    size: 18
+                }
+            },
         },
+
+
     };
 
     return <Bar data={data} options={options} />;
+
 };
 
 export default HorizontalBarChart;

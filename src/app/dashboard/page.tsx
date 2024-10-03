@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+"use client";
 import { Header } from '@/components';
 import React, { useEffect, useState } from 'react';
 
@@ -7,6 +8,10 @@ import VerticalBarChart from '../../components/charts/verticalbarchart'
 import HorizontalBarChart from '../../components/charts/horizontalbarchart'
 import OEEGauge from '../../components/charts/oeegauge';
 import LineChart from '../../components/charts/linechart';
+
+import { MachineMetric } from '@/api/types';
+import { getMetricFromMachines } from '@/api';
+
 
 // const allData = [
 //   {
@@ -43,27 +48,76 @@ const oeeData = {
 };
 
 const datasetVertical = {
-  label: "Quantidade",
-  data: [24200, 2650, 2630], // Valores como na imagem que o João mandou
-  backgroundColor: ["#00bfff", "#ff4500", "#ff6347"],
+  title: "Disponibilidade",
+  label: ["Tempo Programado", "Tempo Produzindo", "Tempo Perdas"],
+  data: [500, 400, 100], // Valores como na imagem que o João mandou
+  backgroundColor: ["#0000ff", "#00ff00", "#ff0000"],
 };
 
 const datasetHorizontal = {
-  label: "Quantidade",
-  data: [24200, 2650, 2630], // Valores como na imagem que o João mandou
-  backgroundColor: ["#00bfff", "#ff4500", "#ff6347"],
+  title: "Performance",
+  label: ["Produção Teórico", "Produção Real", "Diferença"],
+  data: [100, 83, 17], // Valores como na imagem que o João mandou
+  backgroundColor: ["#0000ff", "#00ff00", "#ff0000"],
+};
+
+const datasetHorizontalQualidade = {
+  title: "Qualidade",
+  label: ["Peças Boas", "Peças Totais", "Peças Defeituosas"],
+  data: [92, 100, 8],
+  backgroundColor: ["#00ff00", "#0000ff", "#ff0000"],
 };
 
 const datasetLine = {
   position: 'bottom',
-  label: "OEE Anual",
-  data: [76, 78, 70, 68, 60, 88, 89], // Valores conforme gráfico da imagem
+  label: "OEE - Ultimos 7 dias",
+  data: [76, 78, 70, 68, 60, 88, 89],
   borderColor: "#00bfff",
   backgroundColor: "rgba(0, 191, 255, 0.5)",
   fill: true,
 };
 
+
+
+
 const Dashboard: React.FC = () => {
+
+  const initialMetric: MachineMetric = {
+    id: 0,
+    oee: 0,
+    quality: 0,
+    performance: 0,
+    availability: 0,
+    scheduledTime: 0,
+    productionTime: 0,
+    productionTheoricalTime: 0,
+    downtime: 0,
+    partsProduced: 0,
+    partsDiscarded: 0,
+    date: null,
+    machineId: 0,
+  };
+
+  const [metrics, setMetrics] = useState<MachineMetric>(initialMetric);
+
+  async function fetchMetrics() {
+    try {
+      const response = await getMetricFromMachines(1);
+      setMetrics(response);
+    } catch (error) {
+      console.error("Erro ao buscar métricas:", error);
+    }
+  }
+
+  useEffect(() => {
+
+    fetchMetrics();
+
+  }, []);
+
+  if (!metrics.id) {
+    return <div>Carregando métricas...</div>;
+  }
 
   return (
     <main>
@@ -76,37 +130,36 @@ const Dashboard: React.FC = () => {
             <h2 className="text-xl font-semibold">Torno CNC 2500</h2>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">Usinagem Leve</h2>
+            <h2 className="text-xl font-semibold">Setor B</h2>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">Junho</h2>
-          </div>
-          <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">2024</h2>
+            <h2 className="text-xl font-semibold">02/10/2024</h2>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+          {/* OEE */}
           <div className="bg-white shadow-lg rounded-lg ">
-            <OEEGauge data={oeeData} />
+            <OEEGauge data={metrics} title="OEE - Último dia" />
           </div>
 
           <div className="grid grid-cols-1  gap-6 mt-6">
+            {/* Disponibilidade */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <VerticalBarChart dataset={datasetVertical} />
+              <VerticalBarChart dataset={datasetVertical} title={datasetVertical.title} />
             </div>
+            {/* Performance */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <HorizontalBarChart dataset={datasetHorizontal} />
+              <HorizontalBarChart dataset={datasetHorizontal} title={datasetHorizontal.title} />
             </div>
-
           </div>
           <div className="grid grid-cols-1 gap-6 mt-6">
+            {/* Qualidade */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <h2 className="text-xl font-semibold">OEE Anual</h2>
-              <LineChart dataset={datasetLine} />
+              <HorizontalBarChart dataset={datasetHorizontalQualidade} title={datasetHorizontalQualidade.title} />
             </div>
+            {/* OEE - 7 dias*/}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <h2 className="text-xl font-semibold">Feedback</h2>
-              <LineChart dataset={datasetLine} />
+              <LineChart dataset={datasetLine} title="OEE - Ultimos 7 dias" showLegend={false} />
             </div>
           </div>
         </div>

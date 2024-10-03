@@ -4,9 +4,9 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const VerticalBarChart = ({ dataset }) => {
+const VerticalBarChart = ({ dataset, title }) => {
     const data = {
-        labels: ["Peças Produzidas", "Horas Paradas", "Refugos"],
+        labels: dataset.label,
         datasets: [
             dataset
         ],
@@ -15,8 +15,14 @@ const VerticalBarChart = ({ dataset }) => {
     const options = {
         responsive: true,
         plugins: {
-            legend: { position: "bottom" },
-            title: { display: true, text: "Indicadores de Produção" },
+            legend: { position: "bottom", display: false },
+            title: {
+                display: true,
+                text: title,
+                font: {
+                    size: 18
+                }
+            },
         },
     };
 

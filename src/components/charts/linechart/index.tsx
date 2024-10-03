@@ -4,9 +4,9 @@ import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
-const LineChart = ({ dataset }) => {
+const LineChart = ({ dataset, title, showLegend }) => {
     const data = {
-        labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
+        labels: ["01/01/2024", "01/01/2024", "01/01/2024", "01/01/2024", "01/01/2024", "01/01/2024", "01/01/2024"],
         datasets: [
             dataset
         ],
@@ -15,8 +15,16 @@ const LineChart = ({ dataset }) => {
     const options = {
         responsive: true,
         plugins: {
-            legend: { position: "bottom" },
-            //title: { display: true, text: "OEE Anual" },
+            legend: { position: "bottom", display: showLegend },
+            title: { display: true, text: title },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    maxRotation: 45, // Inclina as datas
+                    minRotation: 45,
+                },
+            },
         },
     };
 
