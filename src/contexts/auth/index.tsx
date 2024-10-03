@@ -55,7 +55,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 }
             );
 
-            setUser({ userId: response.userId, username: data.username });
+            setUser({ userId: response.userId, username: data.username, name: response.name });
 
         } else {
             setUser(undefined);

@@ -6,7 +6,7 @@ export async function getUserInfoById(userId: number): Promise<GetUserInfo | nul
         const { data, status } = await api.get(`/users/${userId}`);
         
         if (status === 200) {
-            return { userId: data.userId, name: data.name, username: data.username };
+            return { userId: data.id, name: data.name, username: data.username };
         }
 
         return null;
