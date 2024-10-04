@@ -1,19 +1,13 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
-import { ErrorContent, Header } from '@/components';
 import React, { useEffect, useState } from 'react';
-
+import moment from 'moment';
+import { Charts, ErrorContent } from '@/components';
 import Layout from '../../../components/layout'
-import VerticalBarChart from '../../../components/charts/verticalbarchart'
-import HorizontalBarChart from '../../../components/charts/horizontalbarchart'
-import OEEGauge from '../../../components/charts/oeegauge';
-import LineChart from '../../../components/charts/linechart';
-
 import { MachineMetrics } from '@/api/types';
 import { getLastMetricsByMachine } from '@/api';
 import { DashboardProps } from './types';
-import moment from 'moment';
 
 const Dashboard = ({ params }: DashboardProps) => {
   // const [metrics, setMetrics] = useState<MachineMetrics | null>(null);
@@ -117,27 +111,27 @@ const Dashboard = ({ params }: DashboardProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {/* OEE */}
           <div className="bg-white shadow-lg rounded-lg ">
-            <OEEGauge data={lastMetric} title="OEE" />
+            <Charts.OEEGauge data={lastMetric} title="OEE" />
           </div>
 
           <div className="grid grid-cols-1 gap-6 mt-6">
             {/* Disponibilidade */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <VerticalBarChart dataset={createAvailabilityMetricData(lastMetric)} />
+              <Charts.VerticalBarChart dataset={createAvailabilityMetricData(lastMetric)} />
             </div>
             {/* Performance */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <HorizontalBarChart dataset={createPerformanceMetricData(lastMetric)} />
+              <Charts.HorizontalBarChart dataset={createPerformanceMetricData(lastMetric)} />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-6">
             {/* Qualidade */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <HorizontalBarChart dataset={createQualityMetricData(lastMetric)} />
+              <Charts.HorizontalBarChart dataset={createQualityMetricData(lastMetric)} />
             </div>
             {/* OEE - 7 dias*/}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <LineChart dataset={createOeeDataForPeriod(metrics)} showLegend={false} />
+              <Charts.LineChart dataset={createOeeDataForPeriod(metrics)} showLegend={false} />
             </div>
           </div>
         </div>

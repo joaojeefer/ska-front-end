@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const HorizontalBarChart = ({ dataset }) => {
+export const HorizontalBarChart = ({ dataset }) => {
     const data = {
         //labels: ["Peças Produzidas", "Horas Paradas", "Refugos"],
         labels: dataset.label,
@@ -33,6 +33,4 @@ const HorizontalBarChart = ({ dataset }) => {
     return <Bar data={data} options={options} />;
 
 };
-
-export default HorizontalBarChart;
 

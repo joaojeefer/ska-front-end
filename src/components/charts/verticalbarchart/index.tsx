@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const VerticalBarChart = ({ dataset }) => {
+export const VerticalBarChart = ({ dataset }) => {
     const data = {
         labels: dataset.label,
         datasets: [
@@ -28,6 +28,4 @@ const VerticalBarChart = ({ dataset }) => {
 
     return <Bar data={data} options={options} />;
 };
-
-export default VerticalBarChart;
 

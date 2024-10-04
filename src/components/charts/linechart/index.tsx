@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, PointElement
 
 ChartJS.register(CategoryScale, LinearScale, LineElement, PointElement, Title, Tooltip, Legend);
 
-const LineChart = ({ dataset, showLegend }) => {
+export const LineChart = ({ dataset, showLegend }) => {
     const data = {
         labels: dataset.labels,
         datasets: [
@@ -30,5 +30,3 @@ const LineChart = ({ dataset, showLegend }) => {
 
     return <Line data={data} options={options} />;
 };
-
-export default LineChart;

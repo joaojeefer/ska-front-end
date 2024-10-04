@@ -1,7 +1,7 @@
 "use client";
 import GaugeChart from "react-gauge-chart";
 
-const OEEGauge = ({ data, title }) => {
+export const OEEGauge = ({ data, title }) => {
     return (
         <div className="bg-white shadow-lg rounded-lg p-6">
             <h2 className="text-xl font-semibold">{title}</h2>
@@ -30,5 +30,3 @@ const OEEGauge = ({ data, title }) => {
         </div>
     );
 };
-
-export default OEEGauge;
