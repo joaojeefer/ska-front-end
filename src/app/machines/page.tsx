@@ -4,10 +4,13 @@
 import { getMachines } from '@/api';
 import { Machine } from '@/api/types';
 import { ErrorContent, Header } from '@/components';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const Machines = () => {
   const [machines, setMachines] = useState<Machine[]>([]);
+
+  const router = useRouter();
 
   async function getMachinesList() {
     const machines = await getMachines();
@@ -18,6 +21,10 @@ const Machines = () => {
   useEffect(() => {
     getMachinesList();
   }, []);
+
+  function navigateToMachineDashboard(machineId: number) {
+    router.push(`/dashboard/${machineId}`);
+  }
 
   if (!machines.length) {
     return (
@@ -64,7 +71,7 @@ const Machines = () => {
                           </td>
                           <td className="whitespace-nowrap px-6 py-4">
                             <button
-                              onClick={() => {}}
+                              onClick={() => navigateToMachineDashboard(machine.id)}
                               type="button"
                               className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
