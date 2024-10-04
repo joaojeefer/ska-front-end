@@ -1,7 +1,7 @@
 import { api } from "@/services";
-import { MachineMetric } from "./types";
+import { MachineMetrics } from "./types";
 
-export async function getMetricFromMachines(machineId: number): Promise<MachineMetric | null> {
+export async function getMetricsByMachine(machineId: number): Promise<MachineMetrics | null> {
     try {
         const { data, status } = await api.get(`/metrics/machine/${machineId}`);
 

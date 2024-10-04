@@ -1,4 +1,6 @@
-export type MachineMetric = {
+import { Machine } from "../machine/types";
+
+export type MachineMetrics = {
     id: number;
     oee: number;
     quality: number;
@@ -10,6 +12,7 @@ export type MachineMetric = {
     downtime: number;
     partsProduced: number;
     partsDiscarded: number;
-    date: null;
+    date: string;
     machineId: number;
+    machine: Machine;
 }
