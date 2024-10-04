@@ -15,14 +15,14 @@ export const Header = () => {
         <header className="bg-gray-800">
             <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
-                        <span className="sr-only">Your Company</span>
+                    <div className="-m-1.5 p-1.5">
+                        <span className="sr-only">Sua empresa</span>
                         <img
-                            alt="Your Company"
+                            alt="Sua empresa"
                             src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
                             className="h-8 w-8"
                         />
-                    </a>
+                    </div>
                 </div>
                 <div className="flex lg:hidden">
                     <button
@@ -79,7 +79,7 @@ export const Header = () => {
                         <div className="-my-6 divide-y divide-gray-500/10">
                             <div className="space-y-2 py-6">
                                 <a
-                                    href="#"
+                                    href="/machines"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
                                     Máquinas
