@@ -16,7 +16,7 @@ const OEEGauge = ({ data, title }) => {
             <div className="flex justify-around mt-4">
                 <div className="text-center">
                     <p className="text-md font-semibold">Disponibilidade</p>
-                    <p className="text-lg">{data.performance}</p>
+                    <p className="text-lg">{data.availability}</p>
                 </div>
                 <div className="text-center">
                     <p className="text-md font-semibold">Produtividade</p>
@@ -24,7 +24,7 @@ const OEEGauge = ({ data, title }) => {
                 </div>
                 <div className="text-center">
                     <p className="text-md font-semibold">Qualidade</p>
-                    <p className="text-lg">{data.performance}</p>
+                    <p className="text-lg">{data.quality}</p>
                 </div>
             </div>
         </div>

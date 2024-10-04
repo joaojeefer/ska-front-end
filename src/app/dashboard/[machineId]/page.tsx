@@ -17,9 +17,15 @@ import moment from 'moment';
 
 const Dashboard = ({ params }: DashboardProps) => {
   const [metrics, setMetrics] = useState<MachineMetrics | null>(null);
+  const [lastMetric, setLastMetric] = useState<MachineMetrics | null>(null);
 
   async function fetchMetrics() {
-    const metrics = await getMetricsByMachine(params.machineId);
+    let metrics = await getMetricsByMachine(params.machineId);
+    setLastMetric(metrics[0]);
+
+    if (metrics != null)
+      metrics = metrics.reverse();
+
     setMetrics(metrics);
   }
 
@@ -33,13 +39,11 @@ const Dashboard = ({ params }: DashboardProps) => {
     return moment(date).format('DD/MM/YYYY');
   }
 
-  console.log(metrics);
-
   function createAvailabilityMetricData(allData: MachineMetrics) {
     const data = {
       title: "Disponibilidade",
       label: ["Tempo Programado", "Tempo Produzindo", "Tempo Perdas"],
-      data: [allData.productionTheoricalTime, allData.productionTime, allData.productionTheoricalTime - allData.productionTime],
+      data: [allData.productionTheoricTIme, allData.realProductionTime, allData.productionTheoricTIme - allData.realProductionTime],
       backgroundColor: ["#0000ff", "#00ff00", "#ff0000"],
     }
     return data;
@@ -100,35 +104,35 @@ const Dashboard = ({ params }: DashboardProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">{metrics[3].machine.description}</h2>
+            <h2 className="text-xl font-semibold">{lastMetric.machine.description}</h2>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">{metrics[3].machine.localization}</h2>
+            <h2 className="text-xl font-semibold">{lastMetric.machine.localization}</h2>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">{handleMetricDate(metrics[3].date)}</h2>
+            <h2 className="text-xl font-semibold">{handleMetricDate(lastMetric.date)}</h2>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
           {/* OEE */}
           <div className="bg-white shadow-lg rounded-lg ">
-            <OEEGauge data={metrics[3]} title="OEE - Último dia" />
+            <OEEGauge data={lastMetric} title="OEE" />
           </div>
 
           <div className="grid grid-cols-1  gap-6 mt-6">
             {/* Disponibilidade */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <VerticalBarChart dataset={createAvailabilityMetricData(metrics[3])} />
+              <VerticalBarChart dataset={createAvailabilityMetricData(lastMetric)} />
             </div>
             {/* Performance */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <HorizontalBarChart dataset={createPerformanceMetricData(metrics[3])} />
+              <HorizontalBarChart dataset={createPerformanceMetricData(lastMetric)} />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-6 mt-6">
             {/* Qualidade */}
             <div className="bg-white shadow-lg rounded-lg p-6">
-              <HorizontalBarChart dataset={createQualityMetricData(metrics[3])} />
+              <HorizontalBarChart dataset={createQualityMetricData(lastMetric)} />
             </div>
             {/* OEE - 7 dias*/}
             <div className="bg-white shadow-lg rounded-lg p-6">
