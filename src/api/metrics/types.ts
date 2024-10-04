@@ -12,5 +12,4 @@ export type MachineMetric = {
     partsDiscarded: number;
     date: null;
     machineId: number;
-    //machine: array;
 }
