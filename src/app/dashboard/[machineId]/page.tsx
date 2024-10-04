@@ -11,16 +11,17 @@ import OEEGauge from '../../../components/charts/oeegauge';
 import LineChart from '../../../components/charts/linechart';
 
 import { MachineMetrics } from '@/api/types';
-import { getMetricsByMachine } from '@/api';
+import { getLastMetricsByMachine  } from '@/api';
 import { DashboardProps } from './types';
 import moment from 'moment';
 
 const Dashboard = ({ params }: DashboardProps) => {
-  const [metrics, setMetrics] = useState<MachineMetrics | null>(null);
+  // const [metrics, setMetrics] = useState<MachineMetrics | null>(null);
+  const [metrics, setMetrics] = useState<MachineMetrics[] | null>([]);
   const [lastMetric, setLastMetric] = useState<MachineMetrics | null>(null);
 
   async function fetchMetrics() {
-    let metrics = await getMetricsByMachine(params.machineId);
+    let metrics = await getLastMetricsByMachine(params.machineId, 7);
     setLastMetric(metrics[0]);
 
     if (metrics != null)
@@ -93,16 +94,16 @@ const Dashboard = ({ params }: DashboardProps) => {
     return oeeData;
   }
 
-  if (!metrics) {
+  if (!metrics?.length) {
     return <ErrorContent title='Temos um problema' description='Não foi possível carregar as métricas da máquina selecionada.' />
   }
 
   return (
-    <main>
+    <main className="flex justify-center justify-center items-center min-h-screen w-full">
       <Layout>
-        <h2 className="text-2xl font-bold">Eficiência de Produção</h2>
+        <h2 className="text-2xl font-bold text-center">Eficiência de Produção</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           <div className="bg-white shadow-lg rounded-lg p-6">
             <h2 className="text-xl font-semibold">{lastMetric.machine.description}</h2>
           </div>
@@ -113,13 +114,13 @@ const Dashboard = ({ params }: DashboardProps) => {
             <h2 className="text-xl font-semibold">{handleMetricDate(lastMetric.date)}</h2>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {/* OEE */}
           <div className="bg-white shadow-lg rounded-lg ">
             <OEEGauge data={lastMetric} title="OEE" />
           </div>
 
-          <div className="grid grid-cols-1  gap-6 mt-6">
+          <div className="grid grid-cols-1 gap-6 mt-6">
             {/* Disponibilidade */}
             <div className="bg-white shadow-lg rounded-lg p-6">
               <VerticalBarChart dataset={createAvailabilityMetricData(lastMetric)} />

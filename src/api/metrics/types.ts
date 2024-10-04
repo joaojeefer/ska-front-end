@@ -8,7 +8,7 @@ export type MachineMetrics = {
     availability: number;
     scheduledTime: number;
     productionTime: number;
-    productionTheoricalTime: number;
+    productionTheoricTIme: number;
     realProductionTime: number;
     downtime: number;
     partsProduced: number;
