@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const VerticalBarChart = ({ dataset, title }) => {
+const VerticalBarChart = ({ dataset }) => {
     const data = {
         labels: dataset.label,
         datasets: [
@@ -18,7 +18,7 @@ const VerticalBarChart = ({ dataset, title }) => {
             legend: { position: "bottom", display: false },
             title: {
                 display: true,
-                text: title,
+                text: dataset.title,
                 font: {
                     size: 18
                 }

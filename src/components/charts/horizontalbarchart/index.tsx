@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const HorizontalBarChart = ({ dataset, title }) => {
+const HorizontalBarChart = ({ dataset }) => {
     const data = {
         //labels: ["Peças Produzidas", "Horas Paradas", "Refugos"],
         labels: dataset.label,
@@ -20,7 +20,7 @@ const HorizontalBarChart = ({ dataset, title }) => {
             legend: { position: "top", display: false },
             title: {
                 display: true,
-                text: title,
+                text: dataset.title,
                 font: {
                     size: 18
                 }
