@@ -11,7 +11,7 @@ import OEEGauge from '../../../components/charts/oeegauge';
 import LineChart from '../../../components/charts/linechart';
 
 import { MachineMetrics } from '@/api/types';
-import { getLastMetricsByMachine  } from '@/api';
+import { getLastMetricsByMachine } from '@/api';
 import { DashboardProps } from './types';
 import moment from 'moment';
 
