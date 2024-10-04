@@ -3,8 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { Charts, ErrorContent } from '@/components';
-import Layout from '../../../components/layout'
+import { Charts, ErrorContent, Header, SectionTitle } from '@/components';
 import { MachineMetrics } from '@/api/types';
 import { getLastMetricsByMachine } from '@/api';
 import { DashboardProps } from './types';
@@ -89,51 +88,53 @@ const Dashboard = ({ params }: DashboardProps) => {
   }
 
   return (
-    <main className="flex justify-center items-center min-h-screen w-full">
-      <Layout>
-        <h2 className="text-2xl font-bold text-center">Eficiência de Produção</h2>
+    <main className="min-h-full pb-6">
+      <Header />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionTitle title="Eficiência de Produção" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-          <div className="bg-white shadow-lg rounded-lg p-6">
+          <div className="bg-white shadow-md rounded-md p-6">
             <h2 className="text-xl font-semibold">{lastMetric?.machine.description}</h2>
           </div>
-          <div className="bg-white shadow-lg rounded-lg p-6">
+          <div className="bg-white shadow-md rounded-md p-6">
             <h2 className="text-xl font-semibold">{lastMetric?.machine.localization}</h2>
           </div>
-          <div className="bg-white shadow-lg rounded-lg p-6">
+          <div className="bg-white shadow-md rounded-md p-6">
             <h2 className="text-xl font-semibold">{handleMetricDate(lastMetric?.date)}</h2>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {/* OEE */}
-          <div className="bg-white shadow-lg rounded-lg ">
+          <div className="grid bg-white shadow-md rounded-md">
             <Charts.OEEGauge data={lastMetric} title="OEE" />
           </div>
 
-          <div className="grid grid-cols-1 gap-6 mt-6">
+          <div className="grid grid-cols-1 gap-6">
             {/* Disponibilidade */}
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="bg-white shadow-md rounded-md p-6">
               <Charts.VerticalBarChart dataset={createAvailabilityMetricData(lastMetric)} />
             </div>
             {/* Performance */}
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="bg-white shadow-md rounded-md p-6">
               <Charts.HorizontalBarChart dataset={createPerformanceMetricData(lastMetric)} />
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-6 mt-6">
+
+          <div className="grid grid-cols-1 gap-6">
             {/* Qualidade */}
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="bg-white shadow-md rounded-md p-6">
               <Charts.HorizontalBarChart dataset={createQualityMetricData(lastMetric)} />
             </div>
             {/* OEE - 7 dias*/}
-            <div className="bg-white shadow-lg rounded-lg p-6">
+            <div className="bg-white shadow-md rounded-md p-6">
               <Charts.LineChart dataset={createOeeDataForPeriod(metrics)} />
             </div>
           </div>
         </div>
-
-      </Layout>
+      </div>
     </main>
   );
 }
