@@ -1,7 +1,9 @@
 "use client";
-import GaugeChart from "react-gauge-chart";
 
-export const OEEGauge = ({ data, title }) => {
+import GaugeChart from "react-gauge-chart";
+import { OEEGaugeChartProps } from "./types";
+
+export const OEEGauge = ({ data, title }: OEEGaugeChartProps) => {
     return (
         <div className="bg-white shadow-lg rounded-lg p-6">
             <h2 className="text-xl font-semibold">{title}</h2>

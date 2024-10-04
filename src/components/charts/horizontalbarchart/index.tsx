@@ -1,16 +1,14 @@
 "use client";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { HorizontalBarChartProps } from "./types";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-export const HorizontalBarChart = ({ dataset }) => {
+export const HorizontalBarChart = ({ dataset }: HorizontalBarChartProps) => {
     const data = {
-        //labels: ["Peças Produzidas", "Horas Paradas", "Refugos"],
         labels: dataset.label,
-        datasets: [
-            dataset
-        ],
+        datasets: [dataset],
     };
 
     const options = {
@@ -21,13 +19,9 @@ export const HorizontalBarChart = ({ dataset }) => {
             title: {
                 display: true,
                 text: dataset.title,
-                font: {
-                    size: 18
-                }
+                font: { size: 18 }
             },
         },
-
-
     };
 
     return <Bar data={data} options={options} />;
