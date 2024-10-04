@@ -28,7 +28,7 @@ const Machines = () => {
 
   if (!machines.length) {
     return (
-        <ErrorContent title='Temos um problema' description='Não existem máquinas cadastradas no banco de dados, no momento.' />
+        <ErrorContent title='Carregando...' description='' />
     );
   }
 

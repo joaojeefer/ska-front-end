@@ -84,7 +84,7 @@ const Dashboard = ({ params }: DashboardProps) => {
   }
 
   if (!metrics?.length || !lastMetric) {
-    return <ErrorContent title='Temos um problema' description='Não foi possível carregar as métricas da máquina selecionada.' />
+    return <ErrorContent title='Carregando...' description='' />
   }
 
   return (
