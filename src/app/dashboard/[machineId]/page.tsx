@@ -11,7 +11,7 @@ import OEEGauge from '../../../components/charts/oeegauge';
 import LineChart from '../../../components/charts/linechart';
 
 import { MachineMetrics } from '@/api/types';
-import { getMetricsByMachine } from '@/api';
+import { getLastMetricsByMachine } from '@/api';
 import { DashboardProps } from './types';
 import moment from 'moment';
 
@@ -62,10 +62,10 @@ const datasetLine = {
 // };
 
 const Dashboard = ({ params }: DashboardProps) => {
-  const [metrics, setMetrics] = useState<MachineMetrics | null>(null);
+  const [metrics, setMetrics] = useState<MachineMetrics[] | null>([]);
 
   async function fetchMetrics() {
-      const metrics = await getMetricsByMachine(params.machineId);
+      const metrics = await getLastMetricsByMachine(params.machineId, 7);
       
       setMetrics(metrics);
   }
@@ -80,7 +80,7 @@ const Dashboard = ({ params }: DashboardProps) => {
     return moment(date).format('DD/MM/YYYY');
   }
 
-  if (!metrics) {
+  if (!metrics?.length) {
     return <ErrorContent title='Temos um problema' description='Não foi possível carregar as métricas da máquina selecionada.' />
   }
 
@@ -91,19 +91,19 @@ const Dashboard = ({ params }: DashboardProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">{metrics.machine.description}</h2>
+            <h2 className="text-xl font-semibold">{metrics[0].machine.description}</h2>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">{metrics.machine.localization}</h2>
+            <h2 className="text-xl font-semibold">{metrics[0].machine.localization}</h2>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6">
-            <h2 className="text-xl font-semibold">{handleMetricDate(metrics.date)}</h2>
+            <h2 className="text-xl font-semibold">{handleMetricDate(metrics[0].date)}</h2>
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
           {/* OEE */}
           <div className="bg-white shadow-lg rounded-lg ">
-            <OEEGauge data={metrics} title="OEE - Último dia" />
+            <OEEGauge data={metrics[0]} title="OEE - Último dia" />
           </div>
 
           <div className="grid grid-cols-1  gap-6 mt-6">
