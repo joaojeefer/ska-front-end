@@ -88,7 +88,7 @@ const Dashboard = ({ params }: DashboardProps) => {
   }
 
   return (
-    <main className="min-h-full pb-6">
+    <div className="min-h-full pb-6">
       <Header />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -135,7 +135,7 @@ const Dashboard = ({ params }: DashboardProps) => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
