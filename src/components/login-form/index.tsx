@@ -4,9 +4,10 @@
 import React, { FormEvent, useContext } from 'react';
 import { AuthContext } from '@/contexts';
 import { SignInApiPayload } from '@/api/types';
+import { Spinner } from '../spinner';
 
 export const LoginForm = () => {
-    const { handleSignIn } = useContext(AuthContext);
+    const { isSigningIn, handleSignIn } = useContext(AuthContext);
     
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -21,8 +22,16 @@ export const LoginForm = () => {
         await handleSignIn(data);
     }
 
+    if (isSigningIn) {
+        return (
+            <div className="flex flex-1 justify-center items-center">
+                <Spinner />
+            </div>
+        )
+    }
+
     return (
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="flex flex-1 min-h-full flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Faça seu login
