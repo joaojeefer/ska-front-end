@@ -3,8 +3,6 @@ import { parseCookies } from 'nookies';
 
 const USER_TOKEN_KEY = 'ska-app-token';
 
-const { [USER_TOKEN_KEY]: token } = parseCookies();
-
 export const api = axios.create({
     baseURL: 'http://localhost:3001',
     timeout: 60000,
@@ -13,6 +11,12 @@ export const api = axios.create({
     },
 });
 
-if (token) {
-    api.defaults.headers['Authorization'] = `Bearer ${JSON.parse(token).token}`;
-}
+api.interceptors.request.use(async (config) => {
+    const { [USER_TOKEN_KEY]: token } = parseCookies();
+
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${JSON.parse(token)}`;
+    }
+
+    return config;
+});
